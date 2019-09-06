@@ -7,8 +7,5 @@ describe('cryptoHash()',()=>{
 
     it('produces the same hash with same input arguments',()=>{
         expect(cryptoHash('one','two','three')).toEqual(cryptoHash('three','one','two'));
-    });
-
-    
-    
-})
+    }); 
+});

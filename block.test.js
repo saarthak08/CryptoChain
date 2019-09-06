@@ -13,8 +13,7 @@ describe('Block',function callback(){
         expect(block.lastHash).toEqual(lastHash);
         expect(block.hash).toEqual(hash);
         expect(block.data).toEqual(data);
-    })
-});
+    });
 
 
 describe('genesis',()=>{
@@ -30,31 +29,29 @@ describe('genesis',()=>{
 
 });
 
-describe('mineBlock',()=>{
-    const lastBlock=Block.genesis();
-    const data= 'mined data';
-    const minedBlock=Block.mineBlock({lastBlock, data});
-    it('returns a block instance',()=>{
-        expect(minedBlock instanceof Block).toBe(true);
-    });
+    describe('mineBlock',()=>{
+        const lastBlock=Block.genesis();
+        const minedBlock=Block.mineBlock({lastBlock, data});
+        it('returns a block instance',()=>{
+            expect(minedBlock instanceof Block).toBe(true);
+        });
 
-    it('sets the `lastHash` to be the hash of the lastBlock',()=>{
-        expect(minedBlock.lastHash).toEqual(lastBlock.hash);  //In jest, expected value goes into the toEqual & to be Equal value goes into the expected value
+        it('sets the `lastHash` to be the hash of the lastBlock',()=>{
+            expect(minedBlock.lastHash).toEqual(lastBlock.hash);  //In jest, expected value goes into the toEqual & to be Equal value goes into the expected value
                                                             //which isn't the regular rule in the programming world.
+        });
+
+        it('sets the `data`',()=>{
+            expect(minedBlock.data).toEqual(data);
+        });
+
+        it('sets a `timestamp`',function (){
+            expect(minedBlock.timestamp).not.toEqual(undefined);
+        });
+
+        it('creates a SHA-256 hash based on proper inputs',()=>{
+            expect(minedBlock.hash).toEqual(cryptoHash(minedBlock.lastHash,minedBlock.timestamp,minedBlock.data));
+        });
+
     });
-
-    it('sets the `data`',()=>{
-        expect(minedBlock.data).toEqual(data);
-    });
-
-    it('sets a `timestamp`',function (){
-        expect(minedBlock.timestamp).not.toEqual(undefined);
-    });
-
-    it('creates a SHA-256 hash based on proper inputs',()=>{
-        expect(minedBlock.hash).toEqual(cryptoHash(minedBlock.lastHash,minedBlock.timestamp,minedBlock.data));
-    })
-
 });
-
-
