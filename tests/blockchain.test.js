@@ -1,5 +1,5 @@
-const Blockchain=require('./blockchain.js');
-const Block=require('./block');
+const Blockchain=require('../app/blockchain');
+const Block=require('../app/block');
 
 describe('Blockchain',()=>{
     let blockchain,newChain,originalChain;

@@ -1,9 +1,9 @@
-const Block=require("./block");
-const {GENESIS_DATA}=require('./config.js');
-const cryptoHash=require('./crypto-hash');
+const Block=require("../app/block");
+const {GENESIS_DATA, MINE_RATE}=require('../app/config');
+const cryptoHash=require('../app/crypto-hash');
 
 describe('Block',function callback(){
-    const timestamp='a-date';
+    const timestamp=2000;
     const lastHash='lastHash';
     const hash='hash';
     const data='data';
@@ -68,5 +68,32 @@ describe('genesis',()=>{
                 minedBlock.difficulty));
         });
 
+        it('sets the difficulty criteria',()=>{
+            const possibleResults=[lastBlock.difficulty-1,lastBlock.difficulty+1];
+            expect(possibleResults.includes(minedBlock.difficulty)).toBe(true);
+        });
+
+    });
+
+
+    describe('adjustDifficulty',()=>{
+        it('raises the difficulty for a quickly mined block.',()=>{
+            expect(Block.adjustDifficulty({
+                originalBlock:block,
+                timestamp: block.timestamp + MINE_RATE -100,
+            })).toEqual(block.difficulty+1);
+        });
+
+        it('lowers the difficulty for a slowly mined block',()=>{
+            expect(Block.adjustDifficulty({
+                originalBlock:block,
+                timestamp: block.timestamp + MINE_RATE + 100,
+            })).toEqual(block.difficulty-1);
+        });
+
+        it('has lower limit of 1',()=>{
+            block.difficulty=-1;
+            expect(Block.adjustDifficulty({originalBlock: block})).toEqual(1);
+        });
     });
 });

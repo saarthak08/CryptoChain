@@ -1,4 +1,4 @@
-const {GENESIS_DATA}=require('./config')
+const {GENESIS_DATA, MINE_RATE}=require('./config')
 const cryptoHash=require('./crypto-hash')
 
 class Block{
@@ -16,14 +16,15 @@ class Block{
     
     static mineBlock({lastBlock, data}){
         //const timestamp=Date.now();
-        const {difficulty}=lastBlock;
+        let {difficulty}=lastBlock;
         let nonce=0,hash,timestamp;
         do{
             nonce++;
             timestamp=Date.now();
+            difficulty=Block.adjustDifficulty({originalBlock:lastBlock,timestamp});
             hash=cryptoHash(timestamp,lastBlock.hash,data,nonce,difficulty);
         }
-        while(hash.substring(0,difficulty!==replace('0'.repeat(difficulty))));
+        while(hash.substring(0,difficulty)!=='0'.repeat(difficulty));
         return new this({
             timestamp:timestamp,
             lastHash:lastBlock.hash,
@@ -32,6 +33,20 @@ class Block{
             nonce:nonce,
             hash:hash
         });
+    }
+
+    static adjustDifficulty({originalBlock, timestamp}){
+        const {difficulty}=originalBlock;
+        if(difficulty<1){
+            return 1;
+        }
+        const difference=timestamp-originalBlock.timestamp;
+        if(difference>MINE_RATE){
+            return difficulty-1;
+        }
+        else if(difficulty<MINE_RATE){
+            return difficulty+1;
+        }
     }
 }
 /*
