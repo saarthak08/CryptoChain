@@ -25,11 +25,17 @@ class Blockchain{
                 const block=chain[i];
                 const actualLastHash=chain[i-1].hash;
                 const {timestamp, lastHash, hash,data,nonce,difficulty}=block;
+                const lastDifficulty;
+                lastDifficulty=chain[i-1].difficulty;
+                currentDifficulty=chain[i].difficulty;
+                if(Math.abs(lastDifficulty-difficulty)>1){
+                    return false;
+                }
                 if(lastHash!==actualLastHash){
                     return false;
                 }
                 const validatedHash=cryptoHash(timestamp,lastHash,data,nonce,difficulty);
-                if(hash!=validatedHash){
+                if(hash!==validatedHash){
                     return false;
                 }
             }

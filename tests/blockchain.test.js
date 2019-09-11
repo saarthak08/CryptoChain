@@ -1,5 +1,6 @@
 const Blockchain=require('../app/blockchain');
 const Block=require('../app/block');
+const cryptohash=require('../app/crypto-hash');
 
 describe('Blockchain',()=>{
     let blockchain,newChain,originalChain;
@@ -42,6 +43,26 @@ describe('Blockchain',()=>{
             describe('and a lastHash reference has changed',()=>{
                 it('returns false',()=>{
                     blockchain.chain[2].lastHash='broken-chain';
+                    expect(Blockchain.isValidChain(blockchain.chain)).toBe(false);
+                });
+            });
+
+            describe('and the chain contains a block with jumped difficulty',()=>{
+                it('returns false',()=>{
+                    const lastBlock=blockchain.chain[blockchain.chain.length-1];
+                    const lastHash=lastBlock.hash;
+                    const timestamp=Date.now();
+                    const nonce=0;
+                    const data=[];
+                    const difficulty=lastBlock.difficulty-3;
+
+                    const hash=cryptohash(timestamp,lastHash,nonce,data,difficulty);
+                    const badBlock=new Block({
+                        data,timestamp,lastHash,hash,nonce,difficulty
+                    });
+
+                    blockchain.chain.push(badBlock);
+
                     expect(Blockchain.isValidChain(blockchain.chain)).toBe(false);
                 });
             });

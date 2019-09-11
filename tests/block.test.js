@@ -1,6 +1,8 @@
 const Block=require("../app/block");
 const {GENESIS_DATA, MINE_RATE}=require('../app/config');
 const cryptoHash=require('../app/crypto-hash');
+const hexToBinary=require('hex-to-binary');
+
 
 describe('Block',function callback(){
     const timestamp=2000;
@@ -55,7 +57,7 @@ describe('genesis',()=>{
         });
 
         it('sets a hash that meets the difficulty criteria',()=>{
-            expect(minedBlock.hash.substring(0,minedBlock.difficulty))
+            expect(hexToBinary(minedBlock.hash).substring(0,minedBlock.difficulty))
             .toEqual('0'.repeat(minedBlock.difficulty));
         });
 
