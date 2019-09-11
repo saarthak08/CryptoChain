@@ -1,6 +1,6 @@
-const Block=require("../app/block");
-const {GENESIS_DATA, MINE_RATE}=require('../app/config');
-const cryptoHash=require('../app/crypto-hash');
+const Block=require("../blockchain/block");
+const {GENESIS_DATA, MINE_RATE}=require('../blockchain/config');
+const cryptoHash=require('../blockchain/crypto-hash');
 const hexToBinary=require('hex-to-binary');
 
 

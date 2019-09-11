@@ -25,9 +25,7 @@ class Blockchain{
                 const block=chain[i];
                 const actualLastHash=chain[i-1].hash;
                 const {timestamp, lastHash, hash,data,nonce,difficulty}=block;
-                const lastDifficulty;
-                lastDifficulty=chain[i-1].difficulty;
-                currentDifficulty=chain[i].difficulty;
+                const lastDifficulty=chain[i-1].difficulty;
                 if(Math.abs(lastDifficulty-difficulty)>1){
                     return false;
                 }
@@ -41,10 +39,10 @@ class Blockchain{
             }
             return true;
         }
-    };
+    }
 
     replaceChain(chain){
-        if(chain.length<this.chain.length){
+        if(chain.length<=this.chain.length){
             console.error('incoming chain must be longer.');
             return;
         }

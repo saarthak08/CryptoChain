@@ -1,4 +1,4 @@
-const cryptoHash=require('../app/crypto-hash');
+const cryptoHash=require('../blockchain/crypto-hash');
 
 describe('cryptoHash()',()=>{
     it('generates sha-256 hashed output',()=>{
