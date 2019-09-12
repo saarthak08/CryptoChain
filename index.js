@@ -1,7 +1,7 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const Blockchain=require('./blockchain/blockchain');
-const PubSub=require('./blockchain/pubsub');
+const PubSub=require('./app/pubsub');
 const request=require('request');
 
 const app=express();

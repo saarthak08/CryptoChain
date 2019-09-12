@@ -1,6 +1,6 @@
-const Blockchain=require('../blockchain/blockchain');
-const Block=require('../blockchain/block');
-const cryptohash=require('../blockchain/crypto-hash');
+const Blockchain=require('../blockchain');
+const Block=require('../block');
+const cryptohash=require('../../util/crypto-hash');
 
 describe('Blockchain',()=>{
     let blockchain,newChain,originalChain;
