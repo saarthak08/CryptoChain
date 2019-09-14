@@ -1,8 +1,8 @@
 const Block=require('./block')
-const cryptoHash=require('../util/crypto-hash')
+const {cryptoHash}=require('../util')
 
 
-class Blockchain{
+class Index{
     constructor(){
         this.chain=[Block.genesis()];
     }
@@ -46,7 +46,7 @@ class Blockchain{
             console.error('incoming chain must be longer.');
             return;
         }
-        if(!Blockchain.isValidChain(chain)){
+        if(!Index.isValidChain(chain)){
             console.error('incoming chain must be valid.');
             return;
         }
@@ -57,4 +57,4 @@ class Blockchain{
 }
 
 
-module.exports=Blockchain;
+module.exports=Index;

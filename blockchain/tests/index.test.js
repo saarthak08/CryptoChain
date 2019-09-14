@@ -1,6 +1,6 @@
-const Blockchain=require('../blockchain');
+const Blockchain=require('../index');
 const Block=require('../block');
-const cryptohash=require('../../util/crypto-hash');
+const {cryptoHash}=require('../../util');
 
 describe('Blockchain',()=>{
     let blockchain,newChain,originalChain;
@@ -56,7 +56,7 @@ describe('Blockchain',()=>{
                     const data=[];
                     const difficulty=lastBlock.difficulty-3;
 
-                    const hash=cryptohash(timestamp,lastHash,nonce,data,difficulty);
+                    const hash=cryptoHash(timestamp,lastHash,nonce,data,difficulty);
                     const badBlock=new Block({
                         data,timestamp,lastHash,hash,nonce,difficulty
                     });
