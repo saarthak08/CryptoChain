@@ -2,6 +2,7 @@ const express=require('express');
 const bodyParser=require('body-parser');
 const Blockchain=require('./blockchain');
 const PubSub=require('./app/pubsub');
+const path=require('path');
 const request=require('request');
 const TransactionPool=require('./wallet/transaction-pool');
 const Wallet=require('./wallet');
@@ -38,6 +39,44 @@ if(process.env.GENERATE_PEER_PORT==='true'){
     PEER_PORT=DEFAULT_PORT+ Math.ceil(Math.random()*1000);
 }
 
+const walletFoo=new Wallet();
+const walletBar=new Wallet();
+
+const generateWalletTransaction=({wallet, recipient, amount})=>{
+   const transaction=wallet.createTransaction({
+       recipient, amount, chain:blockchain.chain
+   });
+   transactionPool.setTransaction(transaction);
+};
+
+const walletAction=()=>generateWalletTransaction({
+    wallet,recipient:walletFoo.publicKey,amount:50
+});
+const walletFooAction=()=>generateWalletTransaction({
+    wallet:walletFoo,recipient:walletBar.publicKey,amount:10
+});
+
+const walletBarAction=()=>generateWalletTransaction({
+    wallet:walletBar,recipient:wallet.publicKey,amount:15
+});
+
+for(let i=0;i<10;i++){
+    if(i%3===0){
+        walletAction();
+        walletFooAction();
+    }
+    else if(i%3===1){
+        walletBarAction();
+        walletFooAction();
+    }
+    else{
+        walletAction();
+        walletBarAction();
+    }
+
+    transactionMiner.mineTransactions();
+}
+
 //setTimeout(()=> pubsub.broadcastChain(),1000);
 
 const PORT=PEER_PORT || DEFAULT_PORT;
@@ -49,6 +88,7 @@ app.listen(PORT,()=>{
 });
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname,'client/dist')));  //Adding static pages to the frontend
 
 
 app.get('/api/blocks',(req,res)=>{
@@ -100,4 +140,8 @@ app.get('/api/wallet-info',(req,res)=>{
        address: wallet.publicKey,
        balance:Wallet.calculateBalance({chain:blockchain.chain, address:wallet.publicKey})
    });
+});
+
+app.get('*',(req,res)=>{
+   res.sendFile(path.join(__dirname,'./client/dist/index.html'));
 });
