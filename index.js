@@ -38,7 +38,7 @@ const syncWithRootState = ()=>{
 if(process.env.GENERATE_PEER_PORT==='true'){
     PEER_PORT=DEFAULT_PORT+ Math.ceil(Math.random()*1000);
 }
-
+/*
 const walletFoo=new Wallet();
 const walletBar=new Wallet();
 
@@ -75,7 +75,7 @@ for(let i=0;i<10;i++){
     }
 
     transactionMiner.mineTransactions();
-}
+}*/
 
 //setTimeout(()=> pubsub.broadcastChain(),1000);
 

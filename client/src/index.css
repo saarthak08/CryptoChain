@@ -24,3 +24,16 @@ body{
     flex-direction:column;
     align-items:center;
 }
+
+.Transaction{
+    padding: 5%;
+}
+
+a, a:hover{
+    color: #e66;
+    text-decoration: underline;
+}
+
+.ConductTransaction , .TransactionPool{
+    margin:10%;
+}
