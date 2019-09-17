@@ -9,8 +9,8 @@ A full stack web application depicting the decentralized blockchain network invo
 
 ## *Dependencies:*
 ### These dependencies are required to run this project on localhost environment.
-- Node.js(https://nodejs.org/en/)
-- Redis(https://redis.io/)
+- [Node.js](https://nodejs.org/en/)
+- [Redis](https://redis.io/)
 
 ## *Instructions:*
 - After installing the dependencies listed above & cloning the repository, in the project directory enter `npm install` to install the required modules.
