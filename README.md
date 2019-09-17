@@ -13,9 +13,9 @@ A full stack web application depicting the decentralized blockchain network invo
 - [Redis](https://redis.io/)
 
 ## *Instructions:*
-- After installing the dependencies listed above & cloning the repository, in the project directory enter `npm install` to install the required modules.
+- After installing the dependencies listed above & cloning the repository, in the project directory enter `npm install` in the terminal to install the required modules.
 - After this, enter `npm run start` to start the project on the root node (i.e. PORT:3000).
-- To start different peers/nodes in the network, enter `npm run start-peer` & the server is started on a random PORT which can be noted from the command line stating `listening on PORT:3XXX`.
+- To start different peers/nodes in the network, enter `npm run start-peer` in the terminal & the server is started on a random PORT which can be noted from the command line stating `listening on PORT:3XXX`.
 
 
 ## *Roadmap & Issues:*
